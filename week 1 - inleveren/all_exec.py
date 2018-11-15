@@ -2,6 +2,7 @@
 naam: Gerrit van Os
 klas: TI-V2C
 student_nr: 1719977
+docent: Frits Dannenberg
 """
 import random
 #opgave 1
@@ -166,6 +167,7 @@ def create_random_lists(items,no_of_lists):
         list1 =[]
         for item in range(items):
             list1.append(random.randint(1,365))
+        list1.sort()
         list.append(list1)
     return list
 
@@ -185,9 +187,12 @@ Return
 def check_lists(list_of_lists):
     counter =0
     for i in range(len(list_of_lists)-1):
-        list1=set(list_of_lists[i])
-        list2= set(list_of_lists[i+1])
-        counter += bool(list1.intersection(list2))
+        for j in range(len(list_of_lists[i])):
+            check = len(list_of_lists[i])-1
+            if (j <  check):
+                if (list_of_lists[i][j] == list_of_lists[i][j+1]):
+                    counter += 1
+                    break
     return counter
 
 """
