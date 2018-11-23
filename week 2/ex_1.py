@@ -26,5 +26,9 @@ def machtv3_counter(a,n):
 
     return counter
 
-print(machtv3_counter(2,10000))
-print(2**10000)
+def test_machtv3():
+    print("2 to the power of 6 with machtv3 function: ",machtv3(2, 6))
+    print("2 to the power of 6 with ** operator: ", 2**6)
+    print("amount of multiply's with n =10000: ", machtv3_counter(2,10000))
+
+test_machtv3()
