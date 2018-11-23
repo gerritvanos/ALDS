@@ -2,6 +2,7 @@
 naam: Gerrit van Os
 klas: TI-V2C
 student_nr: 1719977
+docent: Frits Dannenberg
 """
 import random
 #opgave 1
@@ -80,6 +81,8 @@ def getNumbers(s):
         elif(temp != ""):
             output_list.append(int(temp))
             temp = ""
+    if(temp !=""):
+        output_list.append(int(temp))
     return output_list
 
 """
@@ -87,7 +90,9 @@ function to test the getNumbers funtion
 """
 def test_getNumber():
     a = 'een123zin45 6met-632meerdere+7777getallen'
+    b = 'een123zin45 6met-632meerdere+7777getallen12'
     print("this is the result form get_numbers: ",getNumbers(a))
+    print("test case with int on the back of string on bases of feedback",getNumbers(b))
 
 
 #opdracht 3:
@@ -115,32 +120,14 @@ def get_prime(input_list):
 
     return list(sorted(set(input_list)-non_prime_set))
 
-"""
-function to create al list from 2-max_value
-
-Parameters
--------------
-max_value : int
-    the maximum value that needs to be in the list
-
-Return
-------------
- output_list : list
-    a list of all the numbers between 2 and max_value
-"""
-def create_list(max_value):
-    output_list = []
-    for i in range(2,max_value+1):
-        output_list.append(i)
-    return output_list
 
 """
 function to test the get_prime  funtion
 """
 def test_get_prime():
-    my_list = create_list(1000)
+    my_list = list(range(2,1000))
     print("primes from 2-1000", get_prime(my_list))
-    my_list1 = create_list(100)
+    my_list1 = list(range(2,100))
     print("primes from 2-100: ", get_prime(my_list1))
 
 
@@ -161,13 +148,14 @@ Return
     a list of lists with the number of items specified and repeated no_of_lists times
 """
 def create_random_lists(items,no_of_lists):
-    list =[]
+    base_list =[]
     for i in range(no_of_lists):
-        list1 =[]
+        inside_list =[]
         for item in range(items):
-            list1.append(random.randint(1,365))
-        list.append(list1)
-    return list
+            inside_list.append(random.randint(1,365))
+        inside_list.sort()
+        base_list.append(inside_list)
+    return base_list
 
 """
 function to check how often a list contains the same number
@@ -185,9 +173,12 @@ Return
 def check_lists(list_of_lists):
     counter =0
     for i in range(len(list_of_lists)-1):
-        list1=set(list_of_lists[i])
-        list2= set(list_of_lists[i+1])
-        counter += bool(list1.intersection(list2))
+        for j in range(len(list_of_lists[i])):
+            check = len(list_of_lists[i])-1
+            if (j <  check):
+                if (list_of_lists[i][j] == list_of_lists[i][j+1]):
+                    counter += 1
+                    break
     return counter
 
 """

@@ -7,8 +7,10 @@ def getNumbers(s):
         elif(temp != ""):
             output_list.append(int(temp))
             temp = ""
+    if(temp !=""):
+        output_list.append(int(temp))
     return output_list
 
 
-a = 'een123zin45 6met-632meerdere+7777getallen'
+a = 'een123zin45 6met-632meerdere+7777getallen12'
 print(getNumbers(a))
