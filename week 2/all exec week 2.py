@@ -1,9 +1,4 @@
-"""
-naam: Gerrit van Os
-klas: TI-V2C
-student_nr: 1719977
-docent: Frits Dannenberg
-"""
+import random
 
 #opdracht 1
 """
@@ -241,6 +236,83 @@ def test_my_bin():
     print("220 in binary with python function ",bin(220))
 
 
+#opdracht 5
+def swap(a,i,j): #function from joop
+    a[i],a[j] = a[j],a[i]
+
+counter = 0
+def qsort(a,low=0,high=-1): #qsort from joop modified with counter
+    global counter
+    if high == -1:
+        high = len(a) -1
+    if low < high:
+        swap(a,low, random.randint(low,high))
+        m = low
+        for j in range(low+1,high+1):
+
+            if a[j] < a[low]:
+                m += 1
+                swap(a,m,j)
+            counter += 1
+                            # low < i <= m : a[i] < a[low]
+                            # i > m        : a[i] >= a[low]
+        swap(a,low,m)
+                            # low <= i < m : a[i] < a[m]
+                            # i > m              : a[i] >= a[m]
+        if m > 0:
+            qsort(a,low,m-1)
+        qsort(a,m+1,high)
+
+def modyfied_qsort(a, low=0, high=-1):
+    global counter
+    if high == -1:
+        high = len(a) - 1
+    if low < high:
+        swap(a, low, min(a))
+        m = low
+        for j in range(low + 1, high + 1):
+
+            if a[j] < a[low]:
+                m += 1
+                swap(a, m, j)
+            counter += 1
+            # low < i <= m : a[i] < a[low]
+            # i > m        : a[i] >= a[low]
+        swap(a, low, m)
+        # low <= i < m : a[i] < a[m]
+        # i > m              : a[i] >= a[m]
+        if m > 0:
+            modyfied_qsort(a, low, m - 1)
+        modyfied_qsort(a, m + 1, high)
+
+
+
+def isSorted(a): #function from joop
+    i = 0;
+    while i < len(a)-1 and a[i] <= a[i+1]:
+        i += 1
+
+    return i == len(a)-1
+
+def test_qsort_count():
+    global counter
+    random_list = [0]*10000
+    for i in range(10000):
+        random_list[i] = random.randint(0,10000)
+    print("random_list generatad")
+
+    qsort(random_list)
+    print("is list a sorted:", isSorted(random_list))
+    print("with 10.000 elements, elements get compared ",counter, " times")
+
+    random_list2 = [0] * 10000
+    for i in range(10000):
+        random_list2[i] = random.randint(0, 10000)
+    print("random_list re-generatad")
+    counter =0
+    modyfied_qsort(random_list2)
+    print("is random_list sorted:",isSorted(random_list2))
+    print("with 10.000 elements in worst case scenario elements get compared ", counter, " times")
 
 #alle opdrachten onder elkaar uitgeprint
 print("\n opdracht 1:")
@@ -252,3 +324,4 @@ test_check_string()
 print("\n opdracht 4")
 test_my_bin()
 print("\n opdracht 5")
+test_qsort_count()

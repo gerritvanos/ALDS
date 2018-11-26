@@ -3,28 +3,52 @@ def swap(a,i,j):
 
 import random
 
+counter = 0
 def qsort(a,low=0,high=-1):
-    counter =0
+    global counter
     if high == -1:
         high = len(a) -1
     if low < high:
-        swap(a,low, random.randint(low,high))
+        swap(a,low, min(a))
         m = low
         for j in range(low+1,high+1):
-            counter +=1
+
             if a[j] < a[low]:
                 m += 1
                 swap(a,m,j)
-                           # low < i <= m : a[i] < a[low]
+            counter += 1
+                            # low < i <= m : a[i] < a[low]
                             # i > m        : a[i] >= a[low]
         swap(a,low,m)
                             # low <= i < m : a[i] < a[m]
                             # i > m              : a[i] >= a[m]
         if m > 0:
-            return qsort(a,low,m-1) +counter
-        return qsort(a,m+1,high) +counter
-    return 1
+            qsort(a,low,m-1)
+        qsort(a,m+1,high)
 
+
+
+def modyfied_qsort(a, low=0, high=-1):
+    global counter
+    if high == -1:
+        high = len(a) - 1
+    if low < high:
+        swap(a, low, min(a))
+        m = low
+        for j in range(low + 1, high + 1):
+
+            if a[j] < a[low]:
+                m += 1
+                swap(a, m, j)
+            counter += 1
+            # low < i <= m : a[i] < a[low]
+            # i > m        : a[i] >= a[low]
+        swap(a, low, m)
+        # low <= i < m : a[i] < a[m]
+        # i > m              : a[i] >= a[m]
+        if m > 0:
+            modyfied_qsort(a, low, m - 1)
+        modyfied_qsort(a, m + 1, high)
 
 def isSorted(a):
     i = 0;
@@ -33,15 +57,15 @@ def isSorted(a):
 
     return i == len(a)-1
 
-def qsort_count():
+def test_qsort_count():
     a = [0]*10000
     for i in range(10000):
         a[i] = random.randint(0,10000)
     print("a generatad")
 
 
-    counter = qsort(a)
+    qsort(a)
     print("is list a sorted:", isSorted(a))
-    print("with 10.000 element elements get compared ",counter, " times")
+    print("with 10.000 elements, elements get compared ",counter, " times")
 
-qsort_count()
+test_qsort_count()
