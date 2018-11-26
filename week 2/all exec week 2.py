@@ -197,6 +197,7 @@ def test_check_string():
 
     fout_voorbeeld_1 = "([)]"
     fout_voorbeeld_2 = "((( < ) >))"
+    fout_voorbeeld_3 = "({}{}{}[[[]"
 
     print("dit is een goed voorbeeld:'",goed_voorbeeld_1,"':  ",check_string(goed_voorbeeld_1))
     print("dit is een goed voorbeeld: '",goed_voorbeeld_2,"':  ",check_string(goed_voorbeeld_2))
@@ -204,6 +205,7 @@ def test_check_string():
 
     print("dit is een fout voorbeeld: '",fout_voorbeeld_1,"':  ",check_string(fout_voorbeeld_1))
     print("dit is een fout voorbeeld: '",fout_voorbeeld_2,"':  ",check_string(fout_voorbeeld_2))
+    print("dit is een fout voorbeeld: '", fout_voorbeeld_3, "':  ", check_string(fout_voorbeeld_3))
 
 #opdracht 4:
 """
