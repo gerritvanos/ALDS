@@ -179,8 +179,11 @@ def check_string(s):
             if stack.peek() == '[':
                 stack.pop()
         elif(s[i] == ')'):
-            if stack.peek() == '(':
-                stack.pop()
+            try:
+                if stack.peek() == '(':
+                    stack.pop()
+            except:
+                return "incorrecte string"
 
 
     if stack.is_empty():
@@ -191,7 +194,7 @@ def check_string(s):
 function to test check_string()
 """
 def test_check_string():
-    goed_voorbeeld_1 = "((<>)())"
+    goed_voorbeeld_1 = "(())))"
     goed_voorbeeld_2 = "[(<>)]( )(( )( ))"
     goed_voorbeeld_3 = "((<>))"
 
@@ -299,21 +302,19 @@ def isSorted(a): #function from joop
 def test_qsort_count():
     global counter
     random_list = [0]*10000
+    random_list2 = [0] * 10000
     for i in range(10000):
         random_list[i] = random.randint(0,10000)
+        random_list2[i]=random_list[i]
     print("random_list generatad")
 
     qsort(random_list)
-    print("is list a sorted:", isSorted(random_list))
+    print("is random_list sorted:", isSorted(random_list))
     print("with 10.000 elements, elements get compared ",counter, " times")
 
-    random_list2 = [0] * 10000
-    for i in range(10000):
-        random_list2[i] = random.randint(0, 10000)
-    print("random_list re-generatad")
     counter =0
     modyfied_qsort(random_list2)
-    print("is random_list sorted:",isSorted(random_list2))
+    print("is random_list2 sorted:",isSorted(random_list2))
     print("with 10.000 elements in worst case scenario elements get compared ", counter, " times")
 
 #alle opdrachten onder elkaar uitgeprint
