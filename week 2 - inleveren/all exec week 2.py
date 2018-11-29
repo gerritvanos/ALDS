@@ -314,7 +314,6 @@ def test_qsort_count():
 
     counter =0
     modyfied_qsort(random_list2)
-    print("is random_list2 sorted:",isSorted(random_list2))
     print("with 10.000 elements in worst case scenario elements get compared ", counter, " times")
 
 #alle opdrachten onder elkaar uitgeprint
