@@ -305,7 +305,7 @@ def test_qsort_count():
     random_list2 = [0] * 10000
     for i in range(10000):
         random_list[i] = random.randint(0,10000)
-        random_list2[i]=random_list[i]
+    random_list2=list(random_list) #make copy of list 
     print("random_list generatad")
 
     qsort(random_list)
