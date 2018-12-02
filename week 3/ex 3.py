@@ -146,6 +146,7 @@ class BSTNode:
         node.left = node.left.right
         return True
 
+    #hieronder staan de door mij toegevoegde functies:
     def rsearch(self,e):
         if self.element == e:
             return True
@@ -156,6 +157,18 @@ class BSTNode:
         else:
             return False
 
+    def rinsert(self,e):
+
+        if self.element < e:
+            if not self.right:
+                self.right = BSTNode(e,None,None)
+                return True
+            return self.right.rinsert(e)
+        elif self.element > e:
+            if not self.left:
+                self.left = BSTNode(e,None,None)
+                return True
+            return self.left.rinsert(e)
 
 class BST:
     def __init__(self, a=None):
@@ -179,12 +192,6 @@ class BST:
         else:
             return None
 
-    def rsearch(self,e):
-        if self.root and e:
-            return self.root.rsearch(e)
-        else:
-            return None
-
     def insert(self, e):
         if e:
             if self.root:
@@ -194,6 +201,7 @@ class BST:
                 return True
         else:
             return False
+
 
     def delete(self, e):
         if self.root and e:
@@ -215,6 +223,7 @@ class BST:
         else:
             return False
 
+    #hieronder staan de door mij toegevoegde functies
     def max(self):
         root = self.root
         l_child = self.root.left
@@ -232,7 +241,24 @@ class BST:
 
         return maximum
 
+    def rsearch(self, e):
+        if self.root and e:
+            return self.root.rsearch(e)
+        else:
+            return None
 
+    def rinsert(self, e):
+        if e:
+            if self.root:
+                return self.root.rinsert(e)
+            else:
+                self.root = BSTNode(e, None, None)
+                return True
+        else:
+            return False
+
+    def showLevelOrder(self):
+        current = self.root
 
 
 def test_of_new_functions():
@@ -246,7 +272,7 @@ def test_of_new_functions():
     #test max function
     print("test of max function:\n the max of tree_1:",tree_1.max(),"\n the max of tree_2:",tree_2.max())
     #test of rsearch() function
-    print("test of rsearch function: ")
+    print("\ntest of rsearch function: ")
     print("is 14 in tree_1 (should be True): ",tree_1.rsearch(14))
     print("is 8 in tree_2 (should be True): ", tree_2.rsearch(8))
     print("is 2 in tree_2 (should be True): ", tree_2.rsearch(2))
@@ -254,76 +280,26 @@ def test_of_new_functions():
     print("is 20 in tree_1 (should be True): ", tree_1.rsearch(20))
     print("is 25 in tree_2 (should be True): ", tree_2.rsearch(25))
     #test of rinsert() function
+    print("\ntest of rinsert function: ")
+    print("rinsert(20)")
+    tree_1.rinsert(20);
+    print(tree_1)
+    print("delete(2)")
+    tree_1.delete(2)
+    print(tree_1)
+    print("rinsert(2)")
+    tree_1.rinsert(2)
+    print(tree_1)
+    print ("delete(12))")
+    tree_1.delete(12)
+    print(tree_1)
+    print("rinsert(12)")
+    tree_1.rinsert(12)
+    print(tree_1)
+    #test of showLevelOrder() function:
+    print("\ntest of showLevelOrder function: ")
+    tree_1.showLevelOrder()
 
 
 test_of_new_functions()
-
-def standard_BST_test():
-    b = BST([1, 2, 3])
-    print(b)
-    print('----------------')
-    b = BST([1, 2, 3, 4])
-    print(b)
-    print('----------------')
-    b = BST([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    print(b)
-    print('----------------')
-
-    b = BST([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-    print(b)
-    node = b.search(3)
-    if node != None:
-        print(node.element)
-    node = b.search(4)
-    if node != None:
-        print(node.element)
-    node = b.search(8)
-    if node != None:
-        print(node.element)
-    node = b.search(11)
-    if node != None:
-        print(node.element)
-    node = b.search(16)
-    if node != None:
-        print(node.element)
-    b.insert(17);
-    print(b)
-    print('----------------')
-    b.delete(14)
-    print(b)
-    print('----------------')
-
-    print(b.insert(10))
-
-    b = BST()
-    for i in range(1, 11):
-        b.insert(i)
-    print(b)
-
-    print('----------------')
-
-    b = BST(None)
-    print(b)
-    print('----------------')
-    b = BST([])
-    print(b)
-    print('----------------')
-    b = BST([0])
-    print(b)
-    print('----------------')
-
-    b = BST()
-    b.insert(3)
-    b.insert(2)
-    b.insert(10)
-    b.insert(11)
-    b.insert(9)
-    b.insert(6)
-    b.insert(7)
-    b.insert(8)
-    print(b)
-    print('----------------')
-    b.delete(3)
-    print(b)
-    print('----------------')
 
