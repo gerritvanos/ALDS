@@ -1,3 +1,137 @@
+#opdracht 1
+def check(list_of_columns, new_column):  # ga na of i aan a toegevoegd kan worden
+    n = len(list_of_columns)
+    return not (new_column in list_of_columns or  # niet in dezelfde kolom
+                new_column + n in [list_of_columns[j] + j for j in range(n)] or  # niet op dezelfde diagonaal
+                new_column - n in [list_of_columns[j] - j for j in range(n)]) # niet op dezelfde diagonaal
+
+
+def queen_rsearch(amount_of_queens,list_of_solutions,list_of_columns):
+    for i in range(amount_of_queens):
+        if check(list_of_columns, i):
+            list_of_columns.append(i)
+            if len(list_of_columns) == amount_of_queens:
+                if list_of_columns not in list_of_solutions:
+                    list_of_solutions.append(list_of_columns)
+                    queen_rsearch(amount_of_queens,list_of_solutions,[]) # geschikte a gevonden
+                    return True
+            else:
+                if queen_rsearch(amount_of_queens,list_of_solutions,list_of_columns):
+                    return True
+            del list_of_columns[-1] # verwijder laatste element
+    return False
+
+def test_queen_rsearch():
+    list_of_solutions = []
+    queen_rsearch(8,list_of_solutions, [])
+    print("the possible solutions for amount_of_qeeuns = 8")
+    print(list_of_solutions)
+    print("the amount of solutions: ",len(list_of_solutions))
+    list_of_solutions2 = []
+    queen_rsearch(4,list_of_solutions2,[])
+    print("the possible solutions for amount_of_qeeuns = 4")
+    print(list_of_solutions2)
+    print("the amount of solutions: ", len(list_of_solutions2))
+
+#opdracht 2:
+class ListNode:
+    def __init__(self,data,next_node):
+        self.data = data
+        self.next = next_node
+
+    def __repr__(self):
+        return str(self.data)
+
+class MyCircularLinkedList:
+    def __init__(self):
+        self.tail = None
+
+    def __repr__(self):
+        s = ''
+        last = self.tail
+        if last != None:
+            current = last.next
+            s = s + str(current)
+            if current == last:
+                return s
+            current = current.next
+            while current != last:
+                s = s + " -> " + str(current)
+                current = current.next
+            s = s + " -> " + str(current)
+        if not s: # s == '':
+            s = 'empty list'
+        return s
+
+    def append(self,e):
+        if not self.tail: # self.tail == None:
+            self.tail = ListNode(e,None)
+            self.tail.next = self.tail
+        else:
+            n = ListNode(e,self.tail.next)
+            self.tail.next = n
+            self.tail = n
+
+    def delete(self,e):
+        if self.tail: # self.head != None:
+            if self.tail.next == self.tail:
+                if self.tail.data == e:
+                    self.tail = None
+            elif self.tail.data == e:
+                current_node = self.tail
+                while current_node.next != self.tail:
+                    current_node = current_node.next
+                current_node.next = self.tail.next
+                self.tail = current_node
+            else:
+                current = self.tail.next
+                while current != self.tail:
+                    if current.data == e:
+                        current_node = current.next
+                        while current_node != current:
+                            prev = current_node
+                            current_node = current_node.next
+                        prev.next = current.next
+                        current.tail = None
+                    current = current.next
+
+def test_MyCircularLinkedList():
+    mylist = MyCircularLinkedList()
+    print(mylist)
+    mylist.append(1)
+    mylist.append(2)
+    mylist.append(3)
+    mylist.append(4)
+    mylist.append(5)
+    mylist.append(6)
+    print(mylist)
+    mylist.delete(2)
+    print(mylist)
+    mylist.delete(3)
+    print(mylist)
+    mylist.delete(6)
+    print(mylist)
+    mylist.delete(1)
+    print(mylist)
+    mylist.delete(3)
+    print(mylist)
+    mylist.delete(4)
+    print(mylist)
+    mylist.delete(5)
+    print(mylist)
+
+    mylist.append(1)
+    mylist.append(2)
+    mylist.append(3)
+    print(mylist)
+    mylist.delete(3)
+    print(mylist)
+    mylist.delete(1)
+    print(mylist)
+    mylist.delete(2)
+    print(mylist)
+
+#opdracht 3:
 class BSTNode:
     def __init__(self, element, left, right):
         self.element = element
@@ -331,8 +465,46 @@ def test_of_new_functions():
     print(tree_1)
     #test of showLevelOrder() function:
     print("\ntest of showLevelOrder function: ")
+    print("show level order of tree_1")
     tree_1.showLevelOrder()
 
+#opdracht 4 (dictionary methode werkt, deze schrijft de input.txt file naar een frequentie tabel in output.csv
+# trie implementatie is nog work in progress
+def get_word_frequency_from_file_dict(file_name):
+    input_file = open(file_name, "r")
+    words_dict = {}
+    for line in input_file:
+        for word in line.split():
+            #delete punctuation:
+            table = str.maketrans({key: None for key in string.punctuation})
+            word = word.translate(table)
+            word = word.lower()
+            if word is not '':
+                if word not in words_dict:
+                    words_dict[word] = 1
+                else:
+                    words_dict[word] += 1
+    return words_dict
 
+def write_freq_dict_to_file(file_name,freq_dict):
+    output_file = open(file_name,"w")
+    output_file.write("sep=;\n")
+    output_file.write("word;frequency\n")
+    for key in freq_dict:
+        output_string = key + ";" + str(freq_dict.get(key)) + "\n"
+        output_file.write(output_string)
+    output_file.close()
+
+def test_words_in_dict():
+    freq_dict = get_word_frequency_from_file_dict("input.txt")
+    print(freq_dict)
+    write_freq_dict_to_file("output.csv", freq_dict)
+
+print("opdracht 1: ")
+test_queen_rsearch()
+print("\nopdracht 2: ")
+test_MyCircularLinkedList()
+print("\nopdracht 3: ")
 test_of_new_functions()
-
+print("\nopdracht 4: ")
+test_words_in_dict()

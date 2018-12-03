@@ -1,0 +1,24 @@
+You can create a text file on your computer with a text editor. An example of a text editor is Notepad, which is included with Microsoft Windows.
+
+Note: When we refer to a "text file" we are talking about a plain text file without any text formatting (e.g., bold), images, different fonts, font sizes, etc. If you need to create a more rich document with any of these features see how to create a document.
+
+Tip: The below recommendations are for programs included with an operating system. You can also download and install a more powerful and free text editor such as Notepad++ to create, view, and edit text files.
+
+Open and use Notepad.
+Save the file as a text file.
+Create a new text file from the Desktop.
+Create a text file from the Windows command line.
+Create a text file from within a Linux shell.
+Open and use Notepad
+The easiest way to create a text file in Windows is to open up the Notepad software program on your computer. The Notepad is a text editor included with Microsoft Windows.
+
+Tip: A text file is considered a plaintext file and Notepad is only capable of creating and editing plaintext files. Notepad saves any text file with a .txt file extension, which means no special formatting or fonts can be used.
+
+The Windows Notepad program can be found by following either of the steps below.
+
+Click Start
+In the Run or Search box, type Notepad and press enter.
+Or
+
+Click Start
+Open All Programs > Accessories, then click on the Notepad shortcut.
