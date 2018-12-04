@@ -1,3 +1,4 @@
+import string
 #opdracht 1
 def check(list_of_columns, new_column):  # ga na of i aan a toegevoegd kan worden
     n = len(list_of_columns)
@@ -495,10 +496,69 @@ def write_freq_dict_to_file(file_name,freq_dict):
         output_file.write(output_string)
     output_file.close()
 
-def test_words_in_dict():
-    freq_dict = get_word_frequency_from_file_dict("input.txt")
-    print(freq_dict)
-    write_freq_dict_to_file("output.csv", freq_dict)
+class trie_node:
+    def __init__(self,next_nodes,freq=0):
+        self.freq = freq
+        self.next_nodes = next_nodes
+
+    def write_to_file(self,output_file,word = None):
+        if self.freq > 0:
+            output_string = word +";" +str(self.freq) + "\n"
+            output_file.write(output_string)
+        if self.next_nodes:
+            for node in self.next_nodes:
+                self.next_nodes[node].write_to_file(output_file,node)
+
+class trie:
+    def __init__(self):
+        self.root = trie_node({})
+
+    def fill_from_file(self,file_name):
+        input_file = open(file_name,'r')
+        for line in input_file:
+            for word in line.split():
+                # delete punctuation:
+                table = str.maketrans({key: None for key in string.punctuation})
+                word = word.translate(table)
+                word = word.lower()
+                if word is not '':
+                    current = self.root
+                    if word[0] not in current.next_nodes: #add first letter of the word
+                        current.next_nodes[word[0]] = trie_node({})
+                    current = current.next_nodes[word[0]]
+                    if len(word) <=1:
+                        current.freq +=1
+                    for letters in range(1,len(word)):
+                        w = word[:letters+1]
+                        if w not in current.next_nodes:
+                            current.next_nodes[w] = trie_node({})
+                        if letters == len(word)-1:
+                            current.next_nodes[w].freq +=1
+                            break
+                        current = current.next_nodes[w]
+
+
+    def write_to_file(self,file_name):
+        output_file = open(file_name,"w")
+        output_file.write("sep=;\n")
+        output_file.write("word;frequency\n")
+        self.root.write_to_file(output_file)
+
+
+
+def test_freq_table():
+    freq_dict = get_word_frequency_from_file_dict("input.txt")  # create dictionary with words and freqencies
+    print("method 1: the dictionary:")
+    print(freq_dict)  # show dict on screen
+    print("frequency table writen to output_dict.csv")
+    write_freq_dict_to_file("output_dict.csv", freq_dict)  # wirte dict as frequency table to output_dict.csv
+
+    print("method 2: the trie")
+    t = trie()  # make empty trie
+    t.fill_from_file("input.txt")  # fill trie with contents of input.txt
+    t.write_to_file("output_trie.csv")  # write freqency table to output_trie.csv
+    print("frequency table wirten to output_trie.csv")
+
 
 print("opdracht 1: ")
 test_queen_rsearch()
@@ -507,4 +567,4 @@ test_MyCircularLinkedList()
 print("\nopdracht 3: ")
 test_of_new_functions()
 print("\nopdracht 4: ")
-test_words_in_dict()
+test_freq_table()
