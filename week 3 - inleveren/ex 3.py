@@ -158,7 +158,6 @@ class BSTNode:
             return False
 
     def rinsert(self,e):
-
         if self.element < e:
             if not self.right:
                 self.right = BSTNode(e,None,None)
@@ -169,6 +168,7 @@ class BSTNode:
                 self.left = BSTNode(e,None,None)
                 return True
             return self.left.rinsert(e)
+        return False
 
 class BST:
     def __init__(self, a=None):
@@ -223,6 +223,28 @@ class BST:
         else:
             return False
 
+    def get_depth(self):
+        node_list = []
+        node_list.append(self.root)
+        new_level = True
+        level_counter = 0
+        while new_level:
+            level = []
+            while len(node_list):
+                level.append(node_list.pop(0))
+            if len(level) == 0:
+                new_level = False
+                return level_counter
+
+            for node in level:
+                if node.left != None:
+                    node_list.append(node.left)
+
+                if node.right != None:
+                    node_list.append(node.right)
+
+            level_counter += 1
+
     #hieronder staan de door mij toegevoegde functies
     def max(self):
         root = self.root
@@ -254,8 +276,7 @@ class BST:
             else:
                 self.root = BSTNode(e, None, None)
                 return True
-        else:
-            return False
+        return False
 
     def showLevelOrder(self):
         element_queue = myqueue([self.root])
@@ -282,6 +303,49 @@ class BST:
                     element_queue.append(node.right)
 
             level_counter +=1
+
+    def pretty_print(self):
+        offset = self.get_depth();
+        element_queue = myqueue([self.root])
+        level_counter = 0
+        while offset:
+            level = []
+
+            while len(element_queue):
+                level.append(element_queue.dequeue())
+
+            print("level", level_counter, ": ", end=' ')
+
+            for item in level:
+                s = " " * offset**2
+                if item:
+                    print(s,item.element, end=' ')
+                else:
+                    print(s+" ", end ='  ')
+
+            print()
+
+            for i in range(len(level)):
+                none_list = [None]*len(level)
+                if level == none_list:
+                    return
+                elif level[i]:
+                    if level[i].left != None:
+                        element_queue.append(level[i].left)
+                    else:
+                        element_queue.append(None)
+
+                    if level[i].right != None:
+                        element_queue.append(level[i].right)
+                    else:
+                        element_queue.append(None)
+                elif level[i] == None:
+                    element_queue.append(None)
+                    element_queue.append(None)
+
+            level_counter += 1
+            offset -=1
+
 
 class myqueue(list):
     def __init__(self, a=[]):
@@ -332,6 +396,8 @@ def test_of_new_functions():
     #test of showLevelOrder() function:
     print("\ntest of showLevelOrder function: ")
     tree_1.showLevelOrder()
+    print("\ntest of pretty_print function")
+    tree_1.pretty_print()
 
 
 test_of_new_functions()
