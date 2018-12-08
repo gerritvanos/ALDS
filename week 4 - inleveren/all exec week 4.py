@@ -166,7 +166,7 @@ def calculate_ways_to_pay(amount):
 
 
 def test_calculate_ways_to_pay():
-    print("7 cents can be payed: ",calculate_ways_to_pay(5)," different ways")
+    print("7 cents can be payed: ",calculate_ways_to_pay(7)," different ways")
     print("10 cents can be payed: ",calculate_ways_to_pay(10)," different ways")
     print("100(1€) cents can be payed: ",calculate_ways_to_pay(100)," different ways")
 
