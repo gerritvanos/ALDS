@@ -13,9 +13,8 @@ def queen_rsearch(amount_of_queens,list_of_solutions,list_of_columns):
             list_of_columns.append(i)
             if len(list_of_columns) == amount_of_queens:
                 if list_of_columns not in list_of_solutions:
-                    list_of_solutions.append(list_of_columns)
-                    queen_rsearch(amount_of_queens,list_of_solutions,[]) # geschikte a gevonden
-                    return True
+                    list_of_solutions.append(list(list_of_columns))
+                    queen_rsearch(amount_of_queens,list_of_solutions,list_of_columns) # geschikte a gevonden
             else:
                 if queen_rsearch(amount_of_queens,list_of_solutions,list_of_columns):
                     return True

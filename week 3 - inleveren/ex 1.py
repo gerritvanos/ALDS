@@ -20,14 +20,14 @@ def check(list_of_columns, new_column):  # ga na of i aan a toegevoegd kan worde
 
 def rsearch(amount_of_queens,list_of_columns):
     global list_of_solutions
+
     for i in range(amount_of_queens):
         if check(list_of_columns, i):
             list_of_columns.append(i)
             if len(list_of_columns) == amount_of_queens:
                 if list_of_columns not in list_of_solutions:
-                    list_of_solutions.append(list_of_columns)
-                    rsearch(amount_of_queens,[]) # geschikte a gevonden
-                    return True
+                    list_of_solutions.append(list(list_of_columns))
+                    rsearch(amount_of_queens,list_of_columns) # geschikte a gevonden
             else:
                 if rsearch(amount_of_queens,list_of_columns):
                     return True
