@@ -221,12 +221,17 @@ def test_get_bridges():
 
 #opdracht 4:
 def is_strongly_connected(G):
-    start_node = vertices(G)[0]
-    BFS(G,start_node)
-    for v in vertices(G):
-        if v.distance == INFINITY:
-            return False
-
+    current_node = vertices(G)[0]
+    counter = 0
+    while current_node:
+        BFS(G, current_node)
+        for v in vertices(G):
+            if v.distance == INFINITY:
+                return False
+        counter +=1
+        if counter >= len(vertices(G)):
+            break;
+        current_node = vertices(G)[counter]
     return True
 
 def test_is_strongly_connected():
