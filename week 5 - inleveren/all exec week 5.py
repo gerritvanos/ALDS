@@ -132,8 +132,29 @@ def test_is_connected():
 
 #opdracht 2:
 def no_cycles(G): # returns True if G has cycles
-    if len(edges(G))/2>len(vertices(G))-1:
+    if len(edges(G))/2 > len(vertices(G))-1:
         return True
+    return False
+
+def no_cycles_with_BFS(G):
+    list_of_vertices = vertices(G)
+    current_node = list_of_vertices[0]
+    current_node.predecessor = None
+    current_node.distance = 0
+    for v in list_of_vertices:
+        if v != current_node:
+            v.distance = INFINITY  # v krijgt het attribuut 'distance'
+    q = myqueue()
+    q.enqueue(current_node)
+    while q:
+        u = q.dequeue()
+        for v in G[u]:
+            if v.distance == INFINITY:  # v is nog niet bezocht
+                v.distance = u.distance + 1
+                v.predecessor = u  # v krijgt het attribuut 'predecessor'
+                q.enqueue(v)
+            elif u.predecessor != v:
+                return True
     return False
 
 def test_no_cycles():
@@ -160,6 +181,8 @@ def test_no_cycles():
 
     print("does G2 have cycles(should be True): ",no_cycles(G2))
     print("does G3 have cycles(should be False): ",no_cycles(G3))
+    print("does G2 have cycles(should be True)(with BFS): ", no_cycles_with_BFS(G2))
+    print("does G3 have cycles(should be False)(with BFS): ", no_cycles_with_BFS(G3))
 
 #opdracht 3:
 def get_bridges(G):
