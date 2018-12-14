@@ -234,6 +234,24 @@ def is_strongly_connected(G):
         current_node = vertices(G)[counter]
     return True
 
+def is_strongly_connected_with_reverse(G):
+    current_node = vertices(G)[0]
+    BFS(G,current_node)
+    for v in vertices(G):
+        if v.distance == INFINITY:
+            return False
+
+    for edge in edges(G): #reverse list
+        G[edge[0]].remove(edge[1])
+        G[edge[1]].append(edge[0])
+
+    BFS(G,current_node)
+    for v in vertices(G):
+        if v.distance == INFINITY:
+            return False
+
+    return True
+
 def test_is_strongly_connected():
     v_sc_G = [Vertex(i) for i in range(3)]
 
@@ -249,8 +267,19 @@ def test_is_strongly_connected():
              v_nsc_G[2]: [v_nsc_G[0], v_nsc_G[1]]
              }
 
-    print("is sc_G strongly connected(should be True): ",is_strongly_connected(sc_G))
-    print("is nsc_G strongly connected(should be False): ",is_strongly_connected(nsc_G))
+    v_nsc_G2 = [Vertex(i) for i in range(6)]
+
+    nsc_G2 = {v_nsc_G2[0]: [v_nsc_G2[1]],
+              v_nsc_G2[1]: [v_nsc_G2[2]],
+              v_nsc_G2[2]: [v_nsc_G2[0], v_nsc_G2[3]],
+              v_nsc_G2[3]: [v_nsc_G2[4]],
+              v_nsc_G2[4]: [v_nsc_G2[5]],
+              v_nsc_G2[5]: [v_nsc_G2[4]]
+              }
+
+    print("is sc_G strongly connected(should be True): ",is_strongly_connected_with_reverse(sc_G))
+    print("is nsc_G strongly connected(should be False): ",is_strongly_connected_with_reverse(nsc_G))
+    print("is nsc_G2 strongly connected(should be False): ",is_strongly_connected_with_reverse(nsc_G2))
 
 
 #opdracht 5a:
@@ -258,13 +287,11 @@ def calculate_degree(node):
     return len(node)
 
 def is_euler_graph(G):
-    degrees = set()
     for node in vertices(G):
         degree = calculate_degree(G[node])
-        degrees.add(degree)
-    if len(degrees) == 1:
-        return True
-    return False
+        if degree%2 != 0:
+            return False
+    return True
 
 def test_is_euler_graph():
     v_G4 = [Vertex(i) for i in range(8)]
