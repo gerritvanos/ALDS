@@ -302,7 +302,8 @@ def test_is_euler_graph():
           v_G4[3]: [v_G4[0], v_G4[2]],
           v_G4[4]: [v_G4[2], v_G4[5], v_G4[6]],
           v_G4[5]: [v_G4[4], v_G4[6]],
-          v_G4[6]: [v_G4[4], v_G4[5], v_G4[7]]
+          v_G4[6]: [v_G4[4], v_G4[5], v_G4[7]],
+          v_G4[7]: [v_G4[6]]
           }
 
     v_e_G = [Vertex(i) for i in range(6)]
